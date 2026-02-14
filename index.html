@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youth Organization E-Voting System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Youth Organization Elections</h1>
+            <p>Select one candidate for Lead and one for Co-Lead</p>
+        </header>
+
+        <form id="votingForm">
+            <!-- Lead Section -->
+            <section class="position-section">
+                <h2>Lead Position</h2>
+                <div class="candidates-grid">
+                    <div class="candidate-card">
+                        <img src="images/lead1.svg" alt="Lead Candidate 1" class="candidate-photo">
+                        <input type="radio" name="lead" value="lead1" id="lead1" required>
+                        <label for="lead1">Candidate 1</label>
+                    </div>
+                    <div class="candidate-card">
+                        <img src="images/lead2.svg" alt="Lead Candidate 2" class="candidate-photo">
+                        <input type="radio" name="lead" value="lead2" id="lead2" required>
+                        <label for="lead2">Candidate 2</label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Co-Lead Section -->
+            <section class="position-section">
+                <h2>Co-Lead Position</h2>
+                <div class="candidates-grid">
+                    <div class="candidate-card">
+                        <img src="images/colead1.svg" alt="Co-Lead Candidate 1" class="candidate-photo">
+                        <input type="radio" name="colead" value="colead1" id="colead1" required>
+                        <label for="colead1">Candidate 1</label>
+                    </div>
+                    <div class="candidate-card">
+                        <img src="images/colead2.svg" alt="Co-Lead Candidate 2" class="candidate-photo">
+                        <input type="radio" name="colead" value="colead2" id="colead2" required>
+                        <label for="colead2">Candidate 2</label>
+                    </div>
+                </div>
+            </section>
+
+            <button type="submit" class="submit-btn">Submit Vote</button>
+        </form>
+
+        <div id="successMessage" class="success-message hidden">
+            <p>✓ Vote submitted successfully!</p>
+            <p>Refreshing page...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
