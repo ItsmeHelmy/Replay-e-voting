@@ -26,26 +26,42 @@ function getFormattedDateTime() {
     };
 }
 
-// Function to store vote
-function storeVote(voteData) {
-    // Get existing votes from localStorage
-    let votes = JSON.parse(localStorage.getItem('votes')) || [];
-    
-    // Add new vote
-    votes.push(voteData);
-    
-    // Store back to localStorage
-    localStorage.setItem('votes', JSON.stringify(votes));
-    
-    // Log the vote (for demonstration purposes)
-    console.log('Vote stored:', voteData);
-    console.log('All votes:', votes);
-    
-    return voteData;
+// API Base URL - change this when deploying
+const API_BASE = window.location.origin;
+
+// Function to store vote (sends to server API)
+async function storeVote(voteData) {
+    try {
+        const response = await fetch(`${API_BASE}/api/vote`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(voteData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            console.log('Vote stored successfully:', voteData);
+            return { success: true, data: voteData };
+        } else {
+            console.error('Server error:', result.error);
+            return { success: false, error: result.error };
+        }
+    } catch (error) {
+        console.error('Network error:', error);
+        // Fallback to localStorage if server is unavailable
+        let votes = JSON.parse(localStorage.getItem('votes')) || [];
+        votes.push(voteData);
+        localStorage.setItem('votes', JSON.stringify(votes));
+        console.log('Vote stored locally (offline mode):', voteData);
+        return { success: true, data: voteData, offline: true };
+    }
 }
 
 // Handle form submission
-document.getElementById('votingForm').addEventListener('submit', function(e) {
+document.getElementById('votingForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     // Get selected values
@@ -56,6 +72,11 @@ document.getElementById('votingForm').addEventListener('submit', function(e) {
         alert('Please select one candidate for each position');
         return;
     }
+    
+    // Disable submit button to prevent double-click
+    const submitBtn = document.querySelector('.submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Mengirim...';
     
     // Generate UUID and get timestamp
     const uuid = generateUUID();
@@ -72,22 +93,25 @@ document.getElementById('votingForm').addEventListener('submit', function(e) {
     };
     
     // Store the vote
-    storeVote(voteData);
+    const result = await storeVote(voteData);
     
-    // Show success message
-    const successMessage = document.getElementById('successMessage');
-    successMessage.classList.remove('hidden');
-    
-    // Hide the form
-    document.getElementById('votingForm').style.display = 'none';
-    
-    // Refresh page after 2 seconds
-    // Note: This allows multiple votes from same browser, which is intentional
-    // for informal elections. For production use, implement voter authentication
-    // and vote-once protection on the server side.
-    setTimeout(function() {
-        location.reload();
-    }, 2000);
+    if (result.success) {
+        // Show success message
+        const successMessage = document.getElementById('successMessage');
+        successMessage.classList.remove('hidden');
+        
+        // Hide the form
+        document.getElementById('votingForm').style.display = 'none';
+        
+        // Refresh page after 2 seconds
+        setTimeout(function() {
+            location.reload();
+        }, 2000);
+    } else {
+        alert('Gagal mengirim suara. Silakan coba lagi.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Kirim Suara Anda';
+    }
 });
 
 // Make candidate cards clickable
@@ -101,11 +125,18 @@ document.querySelectorAll('.candidate-card').forEach(card => {
 });
 
 // Display vote count on console (for admin purposes)
-window.addEventListener('load', function() {
-    const votes = JSON.parse(localStorage.getItem('votes')) || [];
-    console.log(`Total votes cast: ${votes.length}`);
-    
-    if (votes.length > 0) {
-        console.log('Recent votes:', votes.slice(-5));
+window.addEventListener('load', async function() {
+    try {
+        const response = await fetch(`${API_BASE}/api/results`);
+        const data = await response.json();
+        if (data.success) {
+            console.log(`Total votes cast: ${data.totalVotes}`);
+            console.log('Admin panel available at: /admin');
+        }
+    } catch (error) {
+        // Fallback to localStorage if server unavailable
+        const votes = JSON.parse(localStorage.getItem('votes')) || [];
+        console.log(`Total local votes: ${votes.length}`);
+        console.log('Server not available - running in offline mode');
     }
 });

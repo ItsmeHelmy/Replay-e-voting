@@ -3,56 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youth Organization E-Voting System</title>
+    <title>Replay E-Voting</title>
+    <link rel="icon" type="image/png" href="images/replay-logo.png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Youth Organization Elections</h1>
-            <p>Select one candidate for Lead and one for Co-Lead</p>
+            <h1>PEMILIHAN KETUA DAN WAKIL KETUA</h1>
+                        <img src="images/replay-press.png" alt="replay-logo" class="replay-logo">
+            <p><i><b>Saatnya Menentukan Pemimpin Baru Pemuda Kita!</b></i></p>
         </header>
 
         <form id="votingForm">
             <!-- Lead Section -->
             <section class="position-section">
-                <h2>Lead Position</h2>
+                <h2>Calon Ketua</h2>
                 <div class="candidates-grid">
                     <div class="candidate-card">
-                        <img src="images/lead1.svg" alt="Lead Candidate 1" class="candidate-photo">
+                        <img src="images/L1-Farizal.png" alt="Lead Candidate 1" class="candidate-photo">
                         <input type="radio" name="lead" value="lead1" id="lead1" required>
-                        <label for="lead1">Candidate 1</label>
+                        <label for="lead1">Farizal</label>
                     </div>
                     <div class="candidate-card">
-                        <img src="images/lead2.svg" alt="Lead Candidate 2" class="candidate-photo">
+                        <img src="images/L2-Ridwan.png" alt="Lead Candidate 2" class="candidate-photo">
                         <input type="radio" name="lead" value="lead2" id="lead2" required>
-                        <label for="lead2">Candidate 2</label>
+                        <label for="lead2">Ridwan</label>
                     </div>
                 </div>
             </section>
 
             <!-- Co-Lead Section -->
             <section class="position-section">
-                <h2>Co-Lead Position</h2>
+                <h2>Calon Wakil Ketua</h2>
                 <div class="candidates-grid">
                     <div class="candidate-card">
-                        <img src="images/colead1.svg" alt="Co-Lead Candidate 1" class="candidate-photo">
+                        <img src="images/CL1-Dea.png" alt="Co-Lead Candidate 1" class="candidate-photo">
                         <input type="radio" name="colead" value="colead1" id="colead1" required>
-                        <label for="colead1">Candidate 1</label>
+                        <label for="colead1">Dea</label>
                     </div>
                     <div class="candidate-card">
-                        <img src="images/colead2.svg" alt="Co-Lead Candidate 2" class="candidate-photo">
+                        <img src="images/CL2-Keisya.png" alt="Co-Lead Candidate 2" class="candidate-photo">
                         <input type="radio" name="colead" value="colead2" id="colead2" required>
-                        <label for="colead2">Candidate 2</label>
+                        <label for="colead2">Keisya</label>
                     </div>
                 </div>
             </section>
 
-            <button type="submit" class="submit-btn">Submit Vote</button>
+            <button type="submit" class="submit-btn">Kirim Suara Anda</button>
         </form>
 
         <div id="successMessage" class="success-message hidden">
-            <p>✓ Vote submitted successfully!</p>
+            <p>✓ Suara anda berhasil dikirim!</p>
             <p>Refreshing page...</p>
         </div>
     </div>
