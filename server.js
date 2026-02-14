@@ -267,16 +267,17 @@ app.get("/admin", (req, res) => {
 async function startServer() {
   await initDatabase();
 
-  app.listen(PORT, () => {
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`);
     console.log(`
 ╔════════════════════════════════════════════════════════════╗
 ║          REPLAY E-VOTING SERVER STARTED                    ║
 ╠════════════════════════════════════════════════════════════╣
-║  Voting Page : http://localhost:${PORT}                       ║
-║  Admin Panel : http://localhost:${PORT}/admin                 ║
+║  Voting Page : http://localhost:${PORT}                    ║
+║  Admin Panel : http://localhost:${PORT}/admin              ║
 ╠════════════════════════════════════════════════════════════╣
 ║  Database    : votes.db (SQLite)                           ║
-║  API Base    : http://localhost:${PORT}/api                   ║
+║  API Base    : http://localhost:${PORT}/api                ║
 ╚════════════════════════════════════════════════════════════╝
         `);
   });
