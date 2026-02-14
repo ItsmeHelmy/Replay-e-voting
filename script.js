@@ -82,6 +82,9 @@ document.getElementById('votingForm').addEventListener('submit', function(e) {
     document.getElementById('votingForm').style.display = 'none';
     
     // Refresh page after 2 seconds
+    // Note: This allows multiple votes from same browser, which is intentional
+    // for informal elections. For production use, implement voter authentication
+    // and vote-once protection on the server side.
     setTimeout(function() {
         location.reload();
     }, 2000);

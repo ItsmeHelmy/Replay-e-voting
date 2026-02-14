@@ -101,14 +101,16 @@ Simply upload all files to any web server or open `index.html` directly in a bro
 
 ## Security Notes
 
-- This is a simple voting system suitable for informal elections
+- This is a simple voting system suitable for **informal elections only**
 - Votes are stored locally in the voter's browser
-- For production use, consider:
-  - Implementing voter authentication
-  - Server-side vote storage
-  - Vote encryption
-  - Preventing multiple votes from same user
-  - Audit trails
+- **Multiple votes are allowed**: The system intentionally allows users to vote multiple times after page refresh, which is suitable for testing and informal scenarios
+- For production use with formal elections, you should implement:
+  - **Voter authentication**: Verify voter identity before allowing votes
+  - **Vote-once protection**: Prevent users from voting multiple times (server-side tracking)
+  - **Server-side vote storage**: Store votes securely on a backend server
+  - **Vote encryption**: Protect vote data in transit and at rest
+  - **Audit trails**: Track all voting activities for verification
+  - **Ballot secrecy**: Separate voter identity from vote choices
 
 ## License
 
