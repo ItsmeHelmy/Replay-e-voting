@@ -49,6 +49,7 @@ header p {
 }
 
 .replay-logo {
+    margin-top: 10px;
     width: 250px;
     height: 60px;
 }
